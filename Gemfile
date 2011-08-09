@@ -17,6 +17,8 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'devise'
+gem "arel", "2.1.4"
 
 # Use unicorn as the web server
 # gem 'unicorn'
