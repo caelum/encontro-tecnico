@@ -36,5 +36,10 @@ end
 
 group :test, :development do
   gem "rspec-rails", "~> 2.6"
-  gem 'factory_girl'
+  gem 'factory_girl_rails'
+end
+
+group :development do
+  gem 'autotest'
+  gem 'autotest-growl'
 end
