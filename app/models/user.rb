@@ -6,4 +6,12 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
+
+
+  has_many :presentations
+  belongs_to :last_presentation, :class_name => "Presentation", :foreign_key => "last_presentation_id"
+
+  def self.next_suggestion
+    User.joins(:last_presentation).order('presentations.suggested_date DESC').first
+  end
 end

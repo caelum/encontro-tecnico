@@ -1,7 +1,8 @@
 class Scheduler
 
   def next_suggestion
-    Presentation.last
+    next_user = User.next_suggestion
+    unscheduled_presentations = Presentation.where({scheduled_date: nil, suggested_date: nil, user_id: next_user.id}).order("created_at DESC").first
   end
 
 end
