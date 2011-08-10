@@ -5,7 +5,7 @@ class CreatePresentations < ActiveRecord::Migration
       t.date :scheduled_date
       t.string :name
       t.string :description
-      t.integer :speaker_id
+      t.integer :user_id
 
       t.timestamps
     end

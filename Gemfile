@@ -36,4 +36,5 @@ end
 
 group :test, :development do
   gem "rspec-rails", "~> 2.6"
+  gem 'factory_girl'
 end
