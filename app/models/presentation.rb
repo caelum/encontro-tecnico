@@ -24,4 +24,16 @@ class Presentation < ActiveRecord::Base
     Presentation.where(user_id: user)
   end
 
+
+  def self.from_tsv
+    presentations = []
+    lines = File.new("presentations.tsv").readlines()
+    lines.shift
+    lines.each { |line|
+      values = line.split("\t")
+      presentations << Presentation.new(name: values[2], description: values[3])
+    }
+    presentations
+  end
+
 end
