@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :name
 
 
   has_many :presentations
@@ -31,4 +31,5 @@ class User < ActiveRecord::Base
   def self.without_talk
     User.joins(:presentations).where('presentations.suggested_date is null').order('presentations.created_at')
   end
+
 end

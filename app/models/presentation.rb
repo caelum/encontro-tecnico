@@ -31,7 +31,8 @@ class Presentation < ActiveRecord::Base
     lines.shift
     lines.each { |line|
       values = line.split("\t")
-      presentations << Presentation.new(name: values[2], description: values[3])
+      user = User.find_by_name(values[1])
+      presentations << Presentation.create!(name: values[2], description: values[3], user: user)
     }
     presentations
   end
