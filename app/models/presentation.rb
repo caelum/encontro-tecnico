@@ -1,5 +1,7 @@
 class Presentation < ActiveRecord::Base
   belongs_to :user
+  validates_presence_of :user_id
+  validates_associated :user
 
   after_create :add_last_presentation_to_user
   before_update :update_last_presentation_to_user
@@ -12,8 +14,9 @@ class Presentation < ActiveRecord::Base
   end
 
   def add_last_presentation_to_user
-    if(self.user)
-      self.user.update_attribute :last_presentation,  self
+    if(!self.user.nil?)
+      self.user.last_presentation = self;
+      self.user.save!
     end
   end
 
