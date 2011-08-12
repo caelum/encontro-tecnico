@@ -1,0 +1,13 @@
+<table>
+    <tr>
+        <th>Nome</th>
+        <th>Descrição</th>
+    </tr>
+
+    <% @presentations.each{ |p| %>
+        <tr>
+            <td><%= p.name %></td>
+            <td><%= p.description %></td>
+        </tr>
+    <% }%>
+</table>

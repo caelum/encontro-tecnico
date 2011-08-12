@@ -3,5 +3,6 @@ TTS::Application.routes.draw do
 
   devise_for :users
 
+  resources :presentations
 
 end

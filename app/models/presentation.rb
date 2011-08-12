@@ -20,4 +20,8 @@ class Presentation < ActiveRecord::Base
     end
   end
 
+  def self.from_user(user)
+    Presentation.where(user_id: user)
+  end
+
 end
