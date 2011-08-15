@@ -3,7 +3,9 @@ Factory.sequence :email do |n|
 end
 
 Factory.define :user do |u|
-  u.email { Factory.next(:email) }
+  email = Factory.next(:email)
+  u.email { email }
+  u.name email.split("@").first
   u.password '123456'
 end
 
@@ -14,9 +16,13 @@ Factory.define :presentation do |p|
   p.association :user, :factory => :user
 end
 
-Factory.define :scheduled_presentation, :parent => :presentation do |p|
-  date = Date.new!
-  p.suggested_date date
-  p.scheduled_date date
+Factory.define :suggested_presentation, :parent => :presentation do |p|
+  p.suggested_date Date.new!
+end
+
+
+
+Factory.define :scheduled_presentation, :parent => :suggested_presentation do |p|
+  p.scheduled_date Date.new!
 end
 
