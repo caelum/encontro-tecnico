@@ -37,4 +37,17 @@ class Presentation < ActiveRecord::Base
     presentations
   end
 
+  def accept!
+    self.scheduled_date = suggested_date
+    self.save!
+  end
+
+  def suggest_date!
+    date = Presentation.select(:scheduled_date).where("scheduled_date is not null").order(:scheduled_date).limit(1).first
+    date = Time.now if date.nil?
+    self.suggested_date = (date + 1.week).monday
+    save!
+    self
+  end
+
 end

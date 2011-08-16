@@ -2,12 +2,20 @@
     <tr>
         <th>Nome</th>
         <th>Descrição</th>
+        <th></th>
     </tr>
 
     <% @presentations.each{ |p| %>
         <tr>
             <td><%= p.name %></td>
             <td><%= p.description %></td>
+            <td>
+                <%if p.scheduled_date %>
+                    Data da apresentação  <%= p.scheduled_date %>
+                <%elsif p.suggested_date %>
+                    Data sugerida: <%= p.suggested_date %>
+                <% end %>
+            </td>
         </tr>
     <% }%>
 </table>

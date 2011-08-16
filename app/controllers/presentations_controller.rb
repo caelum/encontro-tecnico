@@ -16,4 +16,9 @@ class PresentationsController < ApplicationController
     @presentation.save!
     redirect_to action: :index
   end
+
+  def accept
+    @presentation = Presentation.new params[:presentation]
+    @presentation.accept!
+  end
 end
