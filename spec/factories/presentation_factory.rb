@@ -3,9 +3,8 @@ Factory.sequence :email do |n|
 end
 
 Factory.define :user do |u|
-  email = Factory.next(:email)
-  u.email { email }
-  u.name email.split("@").first
+  u.email { Factory.next(:email) }
+  u.name {email.split("@").first}
   u.password '123456'
 end
 
