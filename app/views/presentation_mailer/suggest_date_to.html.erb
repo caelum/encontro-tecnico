@@ -1,3 +1,4 @@
 Olá <%= @presentation.user.name %>,
 
 Que tal fazer a talk <%= @presentation.name %>, no dia <%= @presentation.suggested_date %>?
+<%= link_to "Aceito", presentation_accept_suggestion_url(@presentation) %>

@@ -11,6 +11,9 @@ describe PresentationMailer do
       mail.body.encoded.should match(presentation.user.name)
       mail.body.encoded.should match(presentation.name)
       mail.body.encoded.should match(presentation.suggested_date.to_s)
+
+      mail.body.encoded.should match(presentation_accept_suggestion_url(presentation))
+
     end
 
   end

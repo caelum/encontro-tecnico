@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class PresentationsController < ApplicationController
   before_filter :logged_user
 
@@ -18,7 +19,13 @@ class PresentationsController < ApplicationController
   end
 
   def accept
-    @presentation = Presentation.new params[:presentation]
-    @presentation.accept!
+    @presentation = Presentation.find(params[:presentation_id])
+    if(@presentation.user == current_user)
+      @presentation.accept!
+      flash[:error] = "Data aceita"
+    else
+      flash[:error] = "Você não pode editar uma apresentação alheia"
+    end
+    redirect_to presentations_path
   end
 end
