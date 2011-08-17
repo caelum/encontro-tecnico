@@ -26,16 +26,30 @@ describe Presentation do
     end
   end
 
-  context "suggest_date" do
+  context "suggest date" do
     it "should suggest next monday and update the preentation" do
       date = Time.now.monday.to_date
       p = Factory('presentation')
       Presentation.should_receive(:last_scheduled_date).and_return(date)
+      p.should_receive(:save!)
 
       p.suggested_date.should be_nil
       p.suggest_date!
       p.suggested_date.should == (date + 1.week)
+      p.scheduled_date.should be_nil
+    end
+  end
 
+  context "accept date" do
+    it "should schedule and update the preentation" do
+      date = Time.now.monday.to_date + 1.month
+      p = Factory('suggested_presentation', suggested_date: date)
+
+      p.should_receive(:save!)
+
+      p.scheduled_date.should be_nil
+      p.accept!
+      p.scheduled_date.should == p.suggested_date
     end
   end
 end
