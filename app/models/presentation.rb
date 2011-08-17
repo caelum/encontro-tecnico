@@ -43,17 +43,21 @@ class Presentation < ActiveRecord::Base
   end
 
   def suggest_date!
-    result = Presentation.select(:scheduled_date).where("scheduled_date is not null").order(:scheduled_date).limit(1)
-
-    if result.any?
-      date = result.first[:scheduled_date]
-    else
-      date = Time.now
-    end
+    date = Presentation.last_scheduled_date
 
     self.suggested_date = (date + 1.week).monday
     save!
     self
+  end
+
+  def self.last_scheduled_date
+     result = Presentation.select(:scheduled_date).where("scheduled_date is not null").order("scheduled_date DESC").limit(1)
+
+     if result.any?
+      result.first[:scheduled_date]
+     else
+       Time.now.to_date.monday
+    end
   end
 
 end
