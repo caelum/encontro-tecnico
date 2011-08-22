@@ -24,4 +24,7 @@ end
 Factory.define :scheduled_presentation, :parent => :suggested_presentation do |p|
   p.scheduled_date Date.new!
 end
+Factory.define :scheduled_and_rejected_presentation, :parent => :suggested_presentation do |p|
+  p.suggestion_rejected true
+end
 

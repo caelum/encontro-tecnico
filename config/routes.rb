@@ -5,6 +5,7 @@ TTS::Application.routes.draw do
 
   resources :presentations do
     match '/accept' => "presentations#accept", :as => "accept_suggestion"
+    match '/reject' => "presentations#reject", :as => "reject_suggestion"
   end
 
 end

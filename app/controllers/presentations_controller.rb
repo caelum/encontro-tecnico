@@ -20,9 +20,20 @@ class PresentationsController < ApplicationController
 
   def accept
     @presentation = Presentation.find(params[:presentation_id])
-    if(@presentation.user == current_user)
+    if(@presentation.can_be_edited_by(current_user))
       @presentation.accept!
       flash[:error] = "Data aceita"
+    else
+      flash[:error] = "Você não pode editar uma apresentação alheia"
+    end
+    redirect_to presentations_path
+  end
+
+  def reject
+    @presentation = Presentation.find(params[:presentation_id])
+    if(@presentation.can_be_edited_by(current_user))
+      @presentation.reject!
+      flash[:error] = "Data rejeitada"
     else
       flash[:error] = "Você não pode editar uma apresentação alheia"
     end

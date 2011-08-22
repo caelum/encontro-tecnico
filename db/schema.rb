@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110810205422) do
+ActiveRecord::Schema.define(:version => 20110822184318) do
 
   create_table "presentations", :force => true do |t|
     t.date     "suggested_date"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20110810205422) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "suggestion_rejected"
   end
 
   create_table "users", :force => true do |t|

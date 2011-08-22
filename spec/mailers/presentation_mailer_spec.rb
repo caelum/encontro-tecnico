@@ -13,6 +13,7 @@ describe PresentationMailer do
       mail.body.encoded.should match(presentation.suggested_date.to_s)
 
       mail.body.encoded.should match(presentation_accept_suggestion_url(presentation))
+      mail.body.encoded.should match(presentation_reject_suggestion_url(presentation))
 
     end
 

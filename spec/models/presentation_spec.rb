@@ -50,6 +50,40 @@ describe Presentation do
       p.scheduled_date.should be_nil
       p.accept!
       p.scheduled_date.should == p.suggested_date
+      p.suggestion_rejected.should be_false
+    end
+
+    it "should set reject as false when a it is approved" do
+      date = Time.now.monday.to_date + 1.month
+      p = Factory('scheduled_and_rejected_presentation', suggested_date: date)
+
+      p.should_receive(:save!)
+
+      p.scheduled_date.should be_nil
+      p.accept!
+      p.scheduled_date.should == p.suggested_date
+      p.suggestion_rejected.should be_false
+    end
+  end
+
+  context "reject date" do
+    it "should update the preentation as rejected" do
+      date = Time.now.monday.to_date + 1.month
+      p = Factory('suggested_presentation', suggested_date: date)
+
+      p.should_receive(:save!)
+
+      p.reject!
+      p.scheduled_date.should be_nil
+      p.suggestion_rejected.should be_true
+    end
+  end
+
+
+  context "security" do
+    it "should be edited by its owner" do
+      p = Factory('presentation')
+      p.can_be_edited_by(p.user).should be_true
     end
   end
 end

@@ -8,37 +8,51 @@ class Presentation < ActiveRecord::Base
 
   def update_last_presentation_to_user
     old = Presentation.find(self.id)
-    if(old.scheduled_date != self.scheduled_date || old.suggested_date != self.suggested_date)
-      self.user.update_attribute :last_presentation,  self
+    if (old.scheduled_date != self.scheduled_date || old.suggested_date != self.suggested_date)
+      self.user.update_attribute :last_presentation, self
     end
   end
 
   def add_last_presentation_to_user
-    if(!self.user.nil?)
+    if (!self.user.nil?)
       self.user.last_presentation = self;
       self.user.save!
     end
   end
 
-  def self.from_user(user)
-    Presentation.where(user_id: user)
-  end
+  class << self
+    def from_user(user)
+      Presentation.where(user_id: user)
+    end
 
 
-  def self.from_tsv
-    presentations = []
-    lines = File.new("presentations.tsv").readlines()
-    lines.shift
-    lines.each { |line|
-      values = line.split("\t")
-      user = User.find_by_name(values[1])
-      presentations << Presentation.create!(name: values[2], description: values[3], user: user)
-    }
-    presentations
+    def from_tsv
+      presentations = []
+      lines = File.new("presentations.tsv").readlines()
+      lines.shift
+      lines.each { |line|
+        values = line.split("\t")
+        user = User.find_by_name(values[1])
+        presentations << Presentation.create!(name: values[2], description: values[3], user: user)
+      }
+      presentations
+    end
+
+    def last_scheduled_date
+      result = Presentation.select(:scheduled_date).where("scheduled_date is not null").order("scheduled_date DESC").limit(1)
+
+      if result.any?
+        result.first[:scheduled_date]
+      else
+        Time.now.to_date.monday
+      end
+    end
   end
+
 
   def accept!
     self.scheduled_date = suggested_date
+    self.suggestion_rejected = false
     self.save!
   end
 
@@ -50,14 +64,15 @@ class Presentation < ActiveRecord::Base
     self
   end
 
-  def self.last_scheduled_date
-     result = Presentation.select(:scheduled_date).where("scheduled_date is not null").order("scheduled_date DESC").limit(1)
-
-     if result.any?
-      result.first[:scheduled_date]
-     else
-       Time.now.to_date.monday
-    end
+  def reject!
+    self.suggestion_rejected = true
+    self.save!
   end
+
+
+  def can_be_edited_by(user)
+    self.user == user
+  end
+
 
 end
