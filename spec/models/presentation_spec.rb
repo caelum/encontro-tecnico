@@ -30,6 +30,7 @@ describe Presentation do
     it "should suggest next monday and update the preentation" do
       date = Time.now.monday.to_date
       p = Factory('presentation')
+
       Presentation.should_receive(:last_scheduled_date).and_return(date)
       p.should_receive(:save!)
 

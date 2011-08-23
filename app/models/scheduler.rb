@@ -6,4 +6,8 @@ class Scheduler
     presentation.suggest_date!
   end
 
+
+  def can_execute
+    Presentation.where("scheduled_date is null AND suggested_date is not null AND suggestion_rejected is null").count < 1
+  end
 end

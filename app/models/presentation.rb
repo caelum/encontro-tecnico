@@ -29,7 +29,6 @@ class Presentation < ActiveRecord::Base
     def from_tsv
       presentations = []
       lines = File.new("presentations.tsv").readlines()
-      lines.shift
       lines.each { |line|
         values = line.split("\t")
         user = User.find_by_name(values[1])
@@ -74,5 +73,9 @@ class Presentation < ActiveRecord::Base
     self.user == user
   end
 
+
+  def t?
+    
+  end
 
 end

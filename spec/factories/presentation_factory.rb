@@ -13,6 +13,8 @@ Factory.define :presentation do |p|
   p.description "The most amazing presentation"
   p.name "How to be the best"
   p.association :user, :factory => :user
+  p.scheduled_date nil
+  p.suggested_date nil
 end
 
 Factory.define :suggested_presentation, :parent => :presentation do |p|
