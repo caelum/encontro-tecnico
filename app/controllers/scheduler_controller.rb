@@ -1,5 +1,6 @@
 class SchedulerController < ApplicationController
-  def index
-  end
 
+  def index
+    @presentation = Presentation.scheduled
+  end
 end

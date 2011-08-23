@@ -5,3 +5,8 @@
 require File.expand_path('../config/application', __FILE__)
 
 TTS::Application.load_tasks
+
+task :cron => :environment do
+  Scheduler.execute
+end
+

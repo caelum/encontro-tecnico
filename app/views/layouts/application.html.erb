@@ -14,6 +14,16 @@
 <% if flash[:error] %>
     <div id="error"><%= flash[:error] %></div>
 <% end %>
+
+<%= link_to 'Agendadas', root_path %>
+<% if current_user %>
+    <%= link_to 'minhas palestras', mine_path %>
+    <%= link_to 'Logout', destroy_user_session_path, :method => :delete %>
+<% else %>
+    <%= link_to 'Login', new_user_session_path %>
+<% end %>
+
+
 <%= yield %>
 
 </body>

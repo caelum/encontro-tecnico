@@ -64,6 +64,7 @@ describe Presentation do
       p.accept!
       p.scheduled_date.should == p.suggested_date
       p.suggestion_rejected.should be_false
+
     end
   end
 

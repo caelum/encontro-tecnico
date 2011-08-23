@@ -46,6 +46,12 @@ class Presentation < ActiveRecord::Base
         Time.now.to_date.monday
       end
     end
+
+
+    def scheduled
+      Presentation.where("scheduled_date is not null and scheduled_date > ?", Time.now).order(:scheduled_date)
+    end
+
   end
 
 
@@ -71,11 +77,6 @@ class Presentation < ActiveRecord::Base
 
   def can_be_edited_by(user)
     self.user == user
-  end
-
-
-  def t?
-    
   end
 
 end

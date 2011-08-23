@@ -1,8 +1,12 @@
 # encoding: UTF-8
 class PresentationsController < ApplicationController
-  before_filter :logged_user
+  before_filter :filter_only_logged_user
 
   def index
+      redirect_to action: :mine
+  end
+
+  def mine
     @presentations = Presentation.from_user(current_user)
     puts @presentations.any?
   end
@@ -15,7 +19,7 @@ class PresentationsController < ApplicationController
     @presentation = Presentation.new params[:presentation]
     @presentation.user = current_user
     @presentation.save!
-    redirect_to action: :index
+    redirect_to action: :mine
   end
 
   def accept

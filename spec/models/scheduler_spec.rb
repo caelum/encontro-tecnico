@@ -4,7 +4,7 @@ describe Scheduler do
   it "should select the presentation if there is only one" do
     presentation = Factory('presentation')
 
-    suggested_presentation = Scheduler.new.next_suggestion
+    suggested_presentation = Scheduler.next_suggestion
     suggested_presentation.should == presentation
   end
 
@@ -19,7 +19,7 @@ describe Scheduler do
 
     User.should_receive(:next_suggestion).and_return(user1)
 
-    suggested_presentation = Scheduler.new.next_suggestion
+    suggested_presentation = Scheduler.next_suggestion
     suggested_presentation.should == first_from_user_1
   end
 
@@ -32,36 +32,40 @@ describe Scheduler do
     User.should_receive(:next_suggestion).and_return(user1)
 
 
-    suggested_presentation = Scheduler.new.next_suggestion
+    suggested_presentation = Scheduler.next_suggestion
     suggested_presentation.should == already_suggested_but_rejected_presentation_from_user_1
+  end
+
+  it "should return nil if there is no user available" do
+    User.should_receive(:next_suggestion).and_return(nil)
+
+    suggested_presentation = Scheduler.next_suggestion
+    suggested_presentation.should be_nil
   end
 
   context "should return false on can_execute if there is a suggested presentation neither approved nor rejected" do
     it "try after rejected" do
-      scheduler = Scheduler.new
       p = Factory('suggested_presentation', suggested_date: 2.weeks.ago)
       Factory('presentation')
 
-      scheduler.can_execute.should be_false
+      Scheduler.can_execute.should be_false
       p.reject!
-      scheduler.can_execute.should be_true
+      Scheduler.can_execute.should be_true
     end
 
     it "try after accept" do
-      scheduler = Scheduler.new
       p = Factory('suggested_presentation', suggested_date: 2.weeks.ago)
       Factory('presentation')
 
-      scheduler.can_execute.should be_false
+      Scheduler.can_execute.should be_false
       p.accept!
-      scheduler.can_execute.should be_true
+      Scheduler.can_execute.should be_true
     end
     it "should return true if there is NO scheduled presentations" do
-      scheduler = Scheduler.new
       Factory('presentation')
       Factory('presentation')
 
-      scheduler.can_execute.should be_true
+      Scheduler.can_execute.should be_true
     end
   end
 end
