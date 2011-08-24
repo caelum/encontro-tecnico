@@ -43,9 +43,4 @@ class PresentationsController < ApplicationController
     end
     redirect_to presentations_path
   end
-
-
-  def maroto
-    Presentation.from_tsv
-  end
 end

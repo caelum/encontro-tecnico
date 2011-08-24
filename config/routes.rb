@@ -10,6 +10,4 @@ TTS::Application.routes.draw do
     match '/reject' => "presentations#reject", :as => "reject_suggestion"
   end
 
-  match '/maroto' => "presentations#maroto"
-
 end
