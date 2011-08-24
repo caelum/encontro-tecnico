@@ -20,6 +20,8 @@ gem 'jquery-rails'
 gem 'devise'
 gem "arel", "2.1.4"
 
+gem 'therubyracer'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
