@@ -87,5 +87,9 @@ describe Presentation do
       p = Factory('presentation')
       p.can_be_edited_by(p.user).should be_true
     end
+    it "should return nil if receive a nil user" do
+      p = Factory('presentation')
+      p.can_be_edited_by(nil).should be_false
+    end
   end
 end

@@ -1,20 +1,35 @@
 <% if presentations %>
     <table>
         <tr>
+            <th>Apresentador</th>
             <th>Nome</th>
             <th>Descrição</th>
-            <th></th>
+            <th>Data</th>
         </tr>
         <% presentations.each { |p| %>
             <tr>
-                <td><%= p.id %></td>
+                <td>
+                    <%= "(VOCÊ)" if(p.user == current_user)%>
+                    <%= p.user.email %>
+
+                </td>
                 <td><%= p.name %></td>
                 <td><%= p.description %></td>
                 <td>
                     <% if p.scheduled_date %>
-                        Data da apresentação  <%= p.scheduled_date %>
+                        <%= p.scheduled_date %>
                     <% elsif p.suggested_date %>
                         Data sugerida: <%= p.suggested_date %>
+                        <%if current_user %>
+                            <% if p.can_be_edited_by(current_user)%>
+
+                                <br /><%= link_to 'Aceito a data', presentation_accept_suggestion_url(p) %>
+                                <br /><%= link_to 'Não posso nesta data', presentation_reject_suggestion_url(p) %>
+                            <% end %>
+
+                        <% end %>
+                    <% else %>
+                        Ainda não agendada
                     <% end %>
                 </td>
             </tr>
