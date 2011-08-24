@@ -1,0 +1,29 @@
+.clearfix {
+  zoom: 1;
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+.menu{
+     li {
+        float: left;
+        list-style: none;
+        border-left: 1px solid;
+        margin: 0 5px;
+        padding-left: 5px;
+
+        &:first-child {
+            border-left: none;
+            margin-left: 0;
+        }
+
+    }
+    width: 100%;
+}
+
+.content {
+
+}
