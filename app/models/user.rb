@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
 
   has_many :presentations
   belongs_to :last_presentation, :class_name => "Presentation", :foreign_key => "last_presentation_id"
+  validates_uniqueness_of :email, :name
 
   def self.next_suggestion
     sorted_list.first
