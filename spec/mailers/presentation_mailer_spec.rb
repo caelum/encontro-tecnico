@@ -12,8 +12,8 @@ describe PresentationMailer do
       mail.body.encoded.should match(presentation.name)
       mail.body.encoded.should match(presentation.suggested_date.to_s)
 
-      mail.body.encoded.should match(presentation_accept_suggestion_url(presentation))
-      mail.body.encoded.should match(presentation_reject_suggestion_url(presentation))
+      mail.body.encoded.should match("http://localhost:3000" + presentation_accept_suggestion_path(presentation))
+      mail.body.encoded.should match("http://localhost:3000" + presentation_reject_suggestion_path(presentation))
 
     end
 

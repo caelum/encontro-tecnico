@@ -1,6 +1,6 @@
 # encoding: UTF-8
 class PresentationMailer < ActionMailer::Base
-  default from: "from@example.com"
+  default from: "david.paniz@caelum.com.br"
 
 
   def suggest_date_to(presentation)

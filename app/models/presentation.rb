@@ -80,7 +80,7 @@ class Presentation < ActiveRecord::Base
 
 
   def can_be_edited_by(user)
-    self.user == user || user.admin?
+    self.user == user || (user && user.admin?)
   end
 
 
