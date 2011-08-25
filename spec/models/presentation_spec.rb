@@ -87,9 +87,17 @@ describe Presentation do
       p = Factory('presentation')
       p.can_be_edited_by(p.user).should be_true
     end
+
     it "should return nil if receive a nil user" do
       p = Factory('presentation')
       p.can_be_edited_by(nil).should be_false
     end
+
+    it "should be edited by admin" do
+      u = Factory('user', :admin => true)
+      p = Factory('presentation')
+      p.can_be_edited_by(u).should be_true
+    end
+
   end
 end
