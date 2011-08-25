@@ -60,6 +60,9 @@ class Presentation < ActiveRecord::Base
 
 
   def accept!
+    if(suggestion_rejected)
+      raise Exception.new "A data já foi recusada!"
+    end
     self.scheduled_date = suggested_date
     self.suggestion_rejected = false
     self.save!
