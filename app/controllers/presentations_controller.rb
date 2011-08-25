@@ -47,4 +47,15 @@ class PresentationsController < ApplicationController
     end
     redirect_to presentations_path
   end
+
+  def suggest
+    if(current_user.admin?)
+      @presentation = Presentation.find(params[:presentation_id])
+      @presentation.suggest_date!
+      flash[:error] = "Data sugerida"
+    else
+      flash[:error] = "Você não pode sugerir datas"
+    end
+    redirect_to presentations_path
+  end
 end

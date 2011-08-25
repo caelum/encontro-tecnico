@@ -22,14 +22,17 @@
                         <%if current_user %>
                             <% if p.can_be_edited_by(current_user)%>
 
-                                <br /><%= link_to 'Aceito a data', presentation_accept_suggestion_url(p) %>
-                                <br /><%= link_to 'Não posso nesta data', presentation_reject_suggestion_url(p) %>
-                            <% end %>
+                <br /><%= link_to 'Aceito a data', presentation_accept_suggestion_url(p) %>
+                <br /><%= link_to 'Não posso nesta data', presentation_reject_suggestion_url(p) %>
+                                <% end %>
 
-                        <% end %>
-                    <% else %>
+                            <% end %>
+                        <% else %>
                         Ainda não agendada
-                    <% end %>
+                        <%if current_user.admin? %>
+                        <%= link_to 'Sugerir data', presentation_suggest_path(p) %>
+                        <% end %>
+                <% end %>
                 </td>
             </tr>
         <% } %>

@@ -69,6 +69,7 @@ class Presentation < ActiveRecord::Base
     date = Presentation.last_scheduled_date
 
     self.suggested_date = (date + 1.week).monday
+    self.suggestion_rejected = false
     save!
     self
   end
