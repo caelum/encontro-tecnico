@@ -83,5 +83,12 @@ class Presentation < ActiveRecord::Base
     self.user == user || (user && user.admin?)
   end
 
+  def scheduled?
+    scheduled_date != nil
+  end
+
+  def suggested?
+    suggested_date != nil && !suggestion_rejected?
+  end
 
 end

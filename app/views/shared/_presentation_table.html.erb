@@ -15,9 +15,9 @@
                 <td><%= p.name %></td>
                 <td><%= p.description %></td>
                 <td>
-                    <% if p.scheduled_date %>
+                    <% if p.scheduled? %>
                         <%= p.scheduled_date %>
-                    <% elsif p.suggested_date %>
+                    <% elsif p.suggested? %>
                         Data sugerida: <%= p.suggested_date %>
                         <%if current_user %>
                             <% if p.can_be_edited_by(current_user)%>
