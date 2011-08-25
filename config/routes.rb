@@ -4,6 +4,7 @@ TTS::Application.routes.draw do
 
   match '/mine' => "presentations#mine", :as => "mine"
 
+  match '/calendario' => "calendar#index", :as => "calendar"
 
   resources :presentations do
     match '/accept' => "presentations#accept", :as => "accept_suggestion"
