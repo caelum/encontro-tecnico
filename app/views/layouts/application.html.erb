@@ -19,6 +19,7 @@
         <li><%= link_to 'Agendadas', root_path %></li>
         <% if current_user %>
             <li><%= link_to 'minhas palestras', mine_path %></li>
+            <li><%= link_to 'Editar meus dados', edit_user_registration_path%></li>
             <li><%= link_to 'Logout', destroy_user_session_path, :method => :delete %></li>
         <% else %>
             <li><%= link_to 'Login', new_user_session_path %></li>
