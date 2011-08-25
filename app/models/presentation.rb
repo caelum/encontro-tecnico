@@ -1,3 +1,4 @@
+#encoding: UTF-8
 class Presentation < ActiveRecord::Base
   belongs_to :user
   validates_presence_of :user_id
@@ -61,7 +62,7 @@ class Presentation < ActiveRecord::Base
 
   def accept!
     if(suggestion_rejected)
-      raise Exception.new "A data já foi recusada!"
+      raise "A data já foi recusada!"
     end
     self.scheduled_date = suggested_date
     self.suggestion_rejected = false
