@@ -7,7 +7,7 @@ class CalendarController < ApplicationController
           date = presentation.scheduled_date
           event.start = DateTime.civil(date.year, date.month, date.day, 13)
           event.end = DateTime.civil(date.year, date.month, date.day, 14)
-          event.summary = presentation.name
+          event.summary = "#{presentation.user.name} - #{presentation.name}"
           event.description = presentation.description
           @calendar.add event
         end
