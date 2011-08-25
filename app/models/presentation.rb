@@ -52,6 +52,10 @@ class Presentation < ActiveRecord::Base
       Presentation.where("scheduled_date is not null and scheduled_date > ?", Time.now).order(:scheduled_date)
     end
 
+    def all_by_dates
+      Presentation.order("scheduled_date DESC, suggested_date DESC, created_at DESC")
+    end
+
   end
 
 
@@ -78,5 +82,6 @@ class Presentation < ActiveRecord::Base
   def can_be_edited_by(user)
     self.user == user
   end
+
 
 end

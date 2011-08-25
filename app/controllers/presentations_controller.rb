@@ -3,7 +3,11 @@ class PresentationsController < ApplicationController
   before_filter :filter_only_logged_user
 
   def index
+    if(current_user.admin?)
+      @presentations = Presentation.all_by_dates
+    else
       redirect_to action: :mine
+    end
   end
 
   def mine
