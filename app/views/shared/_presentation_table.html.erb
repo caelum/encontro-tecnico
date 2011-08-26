@@ -1,4 +1,4 @@
-<% if presentations && presentations.any?%>
+<% if presentations && presentations.any? %>
     <table>
         <tr>
             <th>Apresentador</th>
@@ -9,7 +9,7 @@
         <% presentations.each { |p| %>
             <tr>
                 <td>
-                    <%= "(VOCÊ)" if(p.user == current_user)%>
+                    <%= "(VOCÊ)" if (p.user == current_user) %>
                     <%= p.user.name %>
                 </td>
                 <td><%= p.name %></td>
@@ -19,21 +19,25 @@
                         <%= p.scheduled_date %>
                     <% elsif p.suggested? %>
                         Data sugerida: <%= p.suggested_date %>
-                        <%if current_user %>
-                            <% if p.can_be_edited_by(current_user)%>
-
-                <br /><%= link_to 'Aceito a data', presentation_accept_suggestion_url(p) %>
-                <br /><%= link_to 'Não posso nesta data', presentation_reject_suggestion_url(p) %>
-                                <% end %>
-
-                            <% end %>
-                        <% else %>
+                    <% else %>
                         Ainda não agendada
-                        <%if current_user.admin? %>
-                        <%= link_to 'Sugerir data', presentation_suggest_path(p) %>
+                        <% if current_user.admin? %>
+                            <%= link_to 'Sugerir data', presentation_suggest_path(p) %>
                         <% end %>
-                <% end %>
+                    <% end %>
                 </td>
+                <% if current_user %>
+                    <% if p.can_be_edited_by(current_user) && !p.scheduled? %>
+                        <td>
+                            <% if p.suggested? %>
+                                <br/><%= link_to 'Aceito a data', presentation_accept_suggestion_url(p) %>
+                                <br/><%= link_to 'Não posso nesta data', presentation_reject_suggestion_url(p) %>
+                            <% else %>
+                                <%= link_to 'Editar', edit_presentation_path(p) %>
+                            <% end %>
+                        </td>
+                    <% end %>
+                <% end %>
             </tr>
         <% } %>
     </table>
