@@ -21,20 +21,24 @@
                         Data sugerida: <%= p.suggested_date %>
                     <% else %>
                         Ainda não agendada
-                        <% if current_user.admin? %>
-                            <%= link_to 'Sugerir data', presentation_suggest_path(p) %>
-                        <% end %>
                     <% end %>
                 </td>
                 <% if current_user %>
                     <% if p.can_be_edited_by(current_user) && !p.scheduled? %>
                         <td>
-                            <% if p.suggested? %>
-                                <br/><%= link_to 'Aceito a data', presentation_accept_suggestion_url(p) %>
-                                <br/><%= link_to 'Não posso nesta data', presentation_reject_suggestion_url(p) %>
-                            <% else %>
-                                <%= link_to 'Editar', edit_presentation_path(p) %>
-                            <% end %>
+                            <ul>
+
+                                <% if p.suggested? %>
+                                    <li><%= link_to 'Aceito a data', presentation_accept_suggestion_url(p) %></li>
+                                    <li><%= link_to 'Não posso nesta data', presentation_reject_suggestion_url(p) %></li>
+                                <% else %>
+                                    <li><%= link_to 'Editar', edit_presentation_path(p) %></li>
+                                    <% if current_user.admin? %>
+                                        <li><%= link_to 'Sugerir data', presentation_suggest_path(p) %></li>
+                                    <% end %>
+                                <% end %>
+
+                            </ul>
                         </td>
                     <% end %>
                 <% end %>
