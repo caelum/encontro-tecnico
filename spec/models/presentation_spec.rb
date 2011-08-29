@@ -57,10 +57,13 @@ describe Presentation do
     it "should set reject as false when a it is approved" do
       date = Time.now.monday.to_date + 1.month
       p = Factory('scheduled_and_rejected_presentation', suggested_date: date)
+      p.suggest_date!
+
+
+      p.scheduled_date.should be_nil
 
       p.should_receive(:save!)
 
-      p.scheduled_date.should be_nil
       p.accept!
       p.scheduled_date.should == p.suggested_date
       p.suggestion_rejected.should be_false

@@ -15,6 +15,7 @@ Factory.define :presentation do |p|
   p.association :user, :factory => :user
   p.scheduled_date nil
   p.suggested_date nil
+  p.suggestion_rejected nil
 end
 
 Factory.define :suggested_presentation, :parent => :presentation do |p|

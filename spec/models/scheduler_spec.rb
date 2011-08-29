@@ -48,24 +48,24 @@ describe Scheduler do
       p = Factory('suggested_presentation', suggested_date: 2.weeks.ago)
       Factory('presentation')
 
-      Scheduler.can_execute.should be_false
+      Scheduler.can_execute?.should be_false
       p.reject!
-      Scheduler.can_execute.should be_true
+      Scheduler.can_execute?.should be_true
     end
 
     it "try after accept" do
       p = Factory('suggested_presentation', suggested_date: 2.weeks.ago)
       Factory('presentation')
 
-      Scheduler.can_execute.should be_false
+      Scheduler.can_execute?.should be_false
       p.accept!
-      Scheduler.can_execute.should be_true
+      Scheduler.can_execute?.should be_true
     end
     it "should return true if there is NO scheduled presentations" do
       Factory('presentation')
       Factory('presentation')
 
-      Scheduler.can_execute.should be_true
+      Scheduler.can_execute?.should be_true
     end
   end
 end
