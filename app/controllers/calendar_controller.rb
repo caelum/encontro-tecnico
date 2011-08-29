@@ -13,11 +13,27 @@ class CalendarController < ApplicationController
     end
 
 
-    timezone = Icalendar::Timezone.new
-    timezone.timezone_id = "BRT"
+    @calendar.timezone do
+      timezone_id "America/Sao_Paulo"
 
-    @calendar.add(timezone)
+      daylight do
+        timezone_offset_from "-0300"
+        timezone_offset_to "-0300"
+        timezone_name "BRT"
+        add_recurrence_rule "FREQ=YEARLY;BYMONTH=3;BYDAY=2SU"
+      end
+
+      standard do
+        timezone_offset_from "-0300"
+        timezone_offset_to "-0300"
+        timezone_name "BRT"
+        add_recurrence_rule "YEARLY;BYMONTH=11;BYDAY=1SU"
+      end
+    end
+
+
     @calendar.publish
+    @calendar.to_ical
     render :layout => false, :text => @calendar.to_ical
 
   end
