@@ -48,13 +48,17 @@ class Presentation < ActiveRecord::Base
       end
     end
 
-
     def scheduled
-      Presentation.where("scheduled_date is not null and scheduled_date > ?", Time.now).order(:scheduled_date)
+      Presentation.where("scheduled_date is not null and scheduled_date >= ?", Time.now.to_date).order(:scheduled_date)
     end
 
     def all_by_dates
       Presentation.order("scheduled_date DESC, suggested_date DESC, created_at DESC")
+    end
+
+    def next_scheduled
+      next_monday = Time.now.monday.to_date + 1.week
+      Presentation.where("scheduled_date = ?", next_monday).includes(:user).first
     end
 
   end
