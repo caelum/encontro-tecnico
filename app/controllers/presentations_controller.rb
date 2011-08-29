@@ -16,7 +16,7 @@ class PresentationsController < ApplicationController
     @presentations = Presentation.from_user(current_user)
   end
 
-  def form
+  def new
     @presentation = Presentation.new
     render 'form'
   end
