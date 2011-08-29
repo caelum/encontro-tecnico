@@ -42,30 +42,51 @@ describe Scheduler do
     suggested_presentation = Scheduler.next_suggestion
     suggested_presentation.should be_nil
   end
+  context "can execute" do
+    context "should return false if there is a suggested presentation neither approved nor rejected" do
+      it "try after rejected" do
+        p = Factory('suggested_presentation', suggested_date: 2.weeks.ago)
+        Factory('presentation')
 
-  context "should return false on can_execute if there is a suggested presentation neither approved nor rejected" do
-    it "try after rejected" do
-      p = Factory('suggested_presentation', suggested_date: 2.weeks.ago)
-      Factory('presentation')
+        Scheduler.can_execute?.should be_false
+        p.reject!
+        Scheduler.can_execute?.should be_true
+      end
 
-      Scheduler.can_execute?.should be_false
-      p.reject!
-      Scheduler.can_execute?.should be_true
+      it "try after accept" do
+        p = Factory('suggested_presentation', suggested_date: 2.weeks.ago)
+        Factory('presentation')
+
+        Scheduler.can_execute?.should be_false
+        p.accept!
+        Scheduler.can_execute?.should be_true
+      end
+
+      it "should return true if there is NO scheduled presentations" do
+        Factory('presentation')
+        Factory('presentation')
+
+        Scheduler.can_execute?.should be_true
+      end
     end
 
-    it "try after accept" do
-      p = Factory('suggested_presentation', suggested_date: 2.weeks.ago)
-      Factory('presentation')
+    context "should return false if there are scheduled presentations until 1 months from now" do
+      it "should return true if the last scheduled presentation is before 4 weeks from now" do
+        Factory('scheduled_presentation', scheduled_date: 1.weeks.from_now)
+        Factory('scheduled_presentation', scheduled_date: 2.weeks.from_now)
+        Factory('presentation')
 
-      Scheduler.can_execute?.should be_false
-      p.accept!
-      Scheduler.can_execute?.should be_true
-    end
-    it "should return true if there is NO scheduled presentations" do
-      Factory('presentation')
-      Factory('presentation')
+        Scheduler.can_execute?.should be_true
+      end
 
-      Scheduler.can_execute?.should be_true
+      it "should return false if the last scheduled presentation is after 4 weeks from now" do
+        Factory('scheduled_presentation', scheduled_date: 3.weeks.from_now)
+        Factory('scheduled_presentation', scheduled_date: 4.weeks.from_now)
+        Factory('scheduled_presentation', scheduled_date: 5.weeks.from_now)
+        Factory('presentation')
+
+        Scheduler.can_execute?.should be_false
+      end
     end
   end
 end
