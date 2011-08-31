@@ -27,11 +27,11 @@ class User < ActiveRecord::Base
   end
 
   def self.sort_users_with_presentation
-    User.joins(:last_presentation).order('presentations.suggested_date').where('presentations.suggested_date is NOT null')
+    User.joins(:last_presentation).order('presentations.scheduled_date').where('presentations.scheduled_date is NOT null')
   end
 
   def self.without_talk
-    User.joins(:presentations).where('presentations.scheduled_date is null').order('presentations.created_at')
+    User.joins(:presentations).where('last_presentation_id is null AND presentations.scheduled_date is null').order('presentations.created_at').uniq
   end
 
 end
