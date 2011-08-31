@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   end
 
   def self.without_talk
-    User.joins(:presentations).where('presentations.suggested_date is null').order('presentations.created_at')
+    User.joins(:presentations).where('presentations.scheduled_date is null').order('presentations.created_at')
   end
 
 end
