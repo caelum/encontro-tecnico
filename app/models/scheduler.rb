@@ -15,7 +15,7 @@ class Scheduler
     end
 
     def execute
-      if (can_execute)
+      if (can_execute?)
         suggested = next_suggestion
         suggested.suggest_date!
         PresentationMailer.suggest_date_to(suggested).deliver if suggested
