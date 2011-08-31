@@ -62,8 +62,8 @@ class Presentation < ActiveRecord::Base
     self.save!
   end
 
-  def suggest_date!
-    date = Presentation.last_scheduled_date
+  def suggest_date!(date = nil)
+    date ||= Presentation.last_scheduled_date
 
     self.suggested_date = (date + 1.week).monday
     self.suggestion_rejected = false
@@ -76,7 +76,7 @@ class Presentation < ActiveRecord::Base
     self.save!
   end
 
-  def cancel_scheduled_date
+  def cancel_scheduled_date!
     self.suggested_date = nil
     self.scheduled_date = nil
     self.suggestion_rejected = false
