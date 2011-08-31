@@ -85,18 +85,17 @@ class Presentation < ActiveRecord::Base
     self.user.update_attribute :last_presentation, Presentation.last_from(self.user)
     self
   end
-end
 
-def can_be_edited_by(user)
-  self.user == user || (user && user.admin?)
-end
+  def can_be_edited_by(user)
+    self.user == user || (user && user.admin?)
+  end
 
-def scheduled?
-  scheduled_date != nil
-end
+  def scheduled?
+    scheduled_date != nil
+  end
 
-def suggested?
-  suggested_date != nil && !suggestion_rejected?
-end
+  def suggested?
+    suggested_date != nil && !suggestion_rejected?
+  end
 
 end
