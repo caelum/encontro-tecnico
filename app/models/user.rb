@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   end
 
   def self.sorted_list
-    without = without_talk.all
+    without = without_talk
     others = sort_users_with_presentation.limit(10).all
     total = []
     total = total + without
