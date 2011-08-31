@@ -12,12 +12,6 @@ class CalendarController < ApplicationController
       @calendar.add event
     end
 
-    #
-    #@calendar.timezone do
-    #  timezone_id "America/Sao_Paulo"
-    #end
-
-
     @calendar.publish
     render :layout => false, :text => @calendar.to_ical
 
