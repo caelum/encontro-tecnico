@@ -20,6 +20,10 @@ class Scheduler
         suggested.suggest_date!
         PresentationMailer.suggest_date_to(suggested).deliver if suggested
       end
+
+      if(Time.now.thursday?)
+        self.notify_users
+      end
     end
 
     def notify_users
@@ -32,6 +36,8 @@ class Scheduler
       }
 
       PresentationMailer.notify_speaker(presentation).deliver
+
+      presentation.notify_caelum
     end
   end
 end

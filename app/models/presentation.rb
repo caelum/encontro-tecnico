@@ -98,4 +98,16 @@ class Presentation < ActiveRecord::Base
     suggested_date != nil && !suggestion_rejected?
   end
 
+
+  def notify_caelum
+    week_number = self.scheduled_date.cweek
+    mod = week_number % 4
+    case(mod)
+    when 1
+      CaelumMailer.notify_lunch.deliver
+    when 3
+      CaelumMailer.notify_sandwich.deliver
+    end
+  end
+
 end

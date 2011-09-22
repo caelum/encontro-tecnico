@@ -8,7 +8,6 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :name
   #, :remember_me
 
-
   has_many :presentations
   belongs_to :last_presentation, :class_name => "Presentation", :foreign_key => "last_presentation_id"
   validates_uniqueness_of :email, :name

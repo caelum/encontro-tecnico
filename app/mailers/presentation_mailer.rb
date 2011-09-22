@@ -18,4 +18,5 @@ class PresentationMailer < ActionMailer::Base
     @presentation = presentation
     mail(to: [presentation.user.email], subject: "[Almoço Técnico] - Lembrete de apresentação na próxima segunda")
   end
+
 end
